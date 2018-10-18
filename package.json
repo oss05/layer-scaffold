@@ -1,0 +1,27 @@
+{
+  "name": "layer-scaffold",
+  "version": "0.0.1",
+  "description": "Layer scaffold for dboxjs",
+  "main": "layer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dboxjs/layer-scaffold.git"
+  },
+  "author": "alecs.garza@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dboxjs/layer-scaffold/issues"
+  },
+  "homepage": "https://github.com/dboxjs/layer-scaffold#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {}
+}
