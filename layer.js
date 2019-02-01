@@ -3,10 +3,10 @@ import * as d3 from 'd3';
 /*
  * Simple Layer Chart
  */
-export default function (config, helper) {
-
+export default function (config, chart) {
+  
   // Link Layer to the helper object in helper.js
-  var Layer = Object.create(helper);
+  var Layer = chart ? Object.create(chart) : {};
 
   Layer.init = function (config) {
     var vm = this;
@@ -81,7 +81,7 @@ export default function (config, helper) {
 
 
   //-------------------------------
-  //Triggered by the chart.js;
+  //
   Layer.data = function (data) {
     var vm = this;
 
