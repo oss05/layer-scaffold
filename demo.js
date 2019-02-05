@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 
 /*
- * Simple Layer Chart
+ * Simple Demo Chart
  */
 export default function () {
-  // Link Layer to the helper object in helper.js
-  const Layer = {};
+  // Link Demo to the helper object in helper.js
+  const Demo = {};
 
-  Layer.config = function config() {
+  Demo.config = function config() {
     const vm = this;
 
     vm.margin = {
@@ -19,7 +19,7 @@ export default function () {
     vm.scales();
   };
 
-  Layer.scales = function scales() {
+  Demo.scales = function scales() {
     const vm = this;
 
     vm.x = d3.scaleBand()
@@ -30,7 +30,7 @@ export default function () {
       .range([vm.height, 0]);
   };
 
-  Layer.chart = function chart() {
+  Demo.chart = function chart() {
     const vm = this;
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
@@ -45,7 +45,7 @@ export default function () {
   };
 
   // User called
-  Layer.data = function data(dat) {
+  Demo.data = function data(dat) {
     const vm = this;
     // format the data
     dat.forEach((d) => {
@@ -61,7 +61,7 @@ export default function () {
     return vm;
   };
 
-  Layer.draw = function draw() {
+  Demo.draw = function draw() {
     const vm = this;
     // append the rectangles for the bar chart
     const svg = vm.chart();
@@ -87,7 +87,7 @@ export default function () {
     return vm;
   };
 
-  Layer.config();
+  Demo.config();
 
-  return Layer;
+  return Demo;
 }
