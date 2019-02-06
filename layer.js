@@ -3,10 +3,10 @@ import * as d3 from 'd3';
 /*
  * Simple Layer Chart
  */
-export default function (config, helper) {
-
+export default function (config, chart) {
+  
   // Link Layer to the helper object in helper.js
-  var Layer = Object.create(helper);
+  var Layer = chart ? Object.create(chart) : {};
 
   Layer.init = function (config) {
     var vm = this;
@@ -81,7 +81,7 @@ export default function (config, helper) {
 
 
   //-------------------------------
-  //Triggered by the chart.js;
+  //
   Layer.data = function (data) {
     var vm = this;
 
@@ -200,7 +200,7 @@ export default function (config, helper) {
         return vm._scales.y.bandwidth ? vm._scales.y.bandwidth() : Math.abs(vm._scales.y(d[vm._config.y]) - vm._scales.y(0));
       })
       .attr('fill', function (d) {
-        return vm._scales.color !== false ? vm._scales.color(d[vm._config.fill]) : vm._getQuantileColor(d[vm._config.fill], 'default');
+        return vm._scales.color !== false ? vm._scales.color(d[vm._config.fill]) : '#000';
       })
       .style('opacity', 0.9)
       .on('mouseover', function (d, i) {
@@ -219,7 +219,7 @@ export default function (config, helper) {
       .on('mouseout', function (d, i) {
         if (vm._config.hasOwnProperty('quantiles') && vm._config.quantiles.hasOwnProperty('colorsOnHover')) { //OnHover reset default color
           d3.select(this).attr('fill', function (d) {
-            return vm._getQuantileColor(d[vm._config.fill], 'default');
+            return '#000';
           });
         }
         vm._tip.hide();
@@ -237,67 +237,7 @@ export default function (config, helper) {
     return vm;
   };
 
-  Layer._getQuantileColor = function (d, type) {
-    var vm = this;
-    var total = parseFloat(d);
 
-    //@TODO use quantile scale instead of manual calculations 
-    if (vm._config && vm._config.Layer.quantiles && vm._config.Layer.quantiles.colors) {
-      if (vm._quantiles.length > 2) {
-
-        if (vm._config && vm._config.Layer.min !== undefined && vm._config.Layer.max !== undefined) {
-          if (total < vm._config.Layer.min || total > vm._config.Layer.max) {
-            return vm._config.Layer.quantiles.outOfRangeColor;
-          }
-        } else {
-          if (total < vm._minMax[0] || total > vm._minMax[1]) {
-            return vm._config.Layer.quantiles.outOfRangeColor;
-          }
-        }
-
-        if (type == 'default') {
-          if (total <= vm._quantiles[1]) {
-            return vm._config.Layer.quantiles.colors[0]; //'#f7c7c5';
-          } else if (total <= vm._quantiles[2]) {
-            return vm._config.Layer.quantiles.colors[1]; //'#e65158';
-          } else if (total <= vm._quantiles[3]) {
-            return vm._config.Layer.quantiles.colors[2]; //'#c20216';
-          } else if (total <= vm._quantiles[4]) {
-            return vm._config.quantiles.colors[3]; //'#750000';
-          } else if (total <= vm._quantiles[5]) {
-            return vm._config.quantiles.colors[4]; //'#480000';
-          }
-        }
-
-        if (type == 'onHover' && vm._config.hasOwnProperty('quantiles') && vm._config.quantiles.hasOwnProperty('colorsOnHover')) {
-          if (total <= vm._quantiles[1]) {
-            return vm._config.quantiles.colorsOnHover[0]; //'#f7c7c5';
-          } else if (total <= vm._quantiles[2]) {
-            return vm._config.quantiles.colorsOnHover[1]; //'#e65158';
-          } else if (total <= vm._quantiles[3]) {
-            return vm._config.quantiles.colorsOnHover[2]; //'#c20216';
-          } else if (total <= vm._quantiles[4]) {
-            return vm._config.quantiles.colorsOnHover[3]; //'#750000';
-          } else if (total <= vm._quantiles[5]) {
-            return vm._config.quantiles.colorsOnHover[4]; //'#480000';
-          }
-        }
-
-      }
-    }
-
-    if (vm._quantiles.length == 2) {
-      /*if(total === 0 ){
-        return d4theme.colors.quantiles[0];//return '#fff';
-      }else if(total <= vm._quantiles[1]){
-        return d4theme.colors.quantiles[1];//return '#f7c7c5';
-      }*/
-      if (total <= vm._quantiles[1]) {
-        return vm._config.quantiles.colors[0]; //'#f7c7c5';
-      }
-    }
-
-  };
 
   Layer.init(config);
   return Layer;
